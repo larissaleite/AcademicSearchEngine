@@ -1,0 +1,10 @@
+/target/
+*.DS_Store
+/build/
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
