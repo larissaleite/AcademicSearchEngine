@@ -3,88 +3,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-	>
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head></h:head>
+<ui:composition template="templates/basic-template.xhtml">
 
-<head>
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-	rel="stylesheet"></link>
-<link href='http://fonts.googleapis.com/css?family=Raleway'
-	rel='stylesheet' type='text/css' />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-</head>
+	<ui:define name="content">
 
-<style>
-body {
-	padding-top: 3%;
-	font-family: 'Raleway', serif;
-}
+		<div class="login">
 
-h1, h2, h3, h4 {
-	font-family: 'Raleway', serif;
-}
+			<h4>Sign in</h4>
 
-#logo {
-	width: 50%;
-	display: block;
-    margin: 0 auto;
-}
-</style>
+			<h:form>
 
-<body>
-	<div class="container">
-		<div class="row">
+				<span>Username</span>
+				<h:inputText value="#{loginBean.user.username}"
+					styleClass="form-control" id="id_username" type="text"
+					name="username" maxlength="100" placeholder="Username" />
 
-			<div class="col-md-4"></div>
+				<span>Password</span>
+				<h:inputSecret value="#{loginBean.user.password}"
+					styleClass="form-control" id="id_password" type="password"
+					name="password" maxlength="20" placeholder="Password" />
 
-			<div class="col-md-4">
+				<hr />
 
-				<div class="login">
+				<h:commandButton value="Log in" action="#{loginBean.login}"
+					styleClass="form-control btn btn-default">
+				</h:commandButton>
 
-					<img id="logo" src="logo.png" />
+				<br />
 
-					<h4>Sign in</h4>
+				<p>
+					Not a user? Join our smart community
+					<h:commandLink value="Sign up" action="signup.jsf"></h:commandLink>
+				</p>
 
-					<h:form>
-
-						<span>Username</span>
-						<h:inputText value="#{loginBean.user.username}"
-							styleClass="form-control" id="id_username" type="text"
-							name="username" maxlength="100" placeholder="Username" />
-
-						<span>Password</span>
-						<h:inputSecret value="#{loginBean.user.password}"
-							styleClass="form-control" id="id_password" type="password"
-							name="password" maxlength="20" placeholder="Password" />
-
-						<hr />
-
-						<h:commandButton value="Log in" action="#{loginBean.login}"
-							styleClass="form-control btn btn-default"></h:commandButton>
-						
-						<br/>
-						
-						<p>
-							Not a user? Join our smart community
-							<h:commandLink value="Sign up" action="signup.jsf"></h:commandLink>
-						</p>
-
-					</h:form>
-
-				</div>
-			</div>
-
-			<div class="col-md-4"></div>
-
+			</h:form>
 		</div>
-
-
-	</div>
-</body>
+	</ui:define>
+</ui:composition>
 
 </html>

@@ -5,90 +5,47 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<head>
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-	rel="stylesheet"></link>
-<link href='http://fonts.googleapis.com/css?family=Raleway'
-	rel='stylesheet' type='text/css' />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-</head>
+<ui:composition template="templates/basic-template.xhtml">
 
-<style>
-body {
-	padding-top: 3%;
-	font-family: 'Raleway', serif;
-}
+	<ui:define name="content">
 
-h1, h2, h3, h4 {
-	font-family: 'Raleway', serif;
-}
+		<div class="registration">
 
-#logo {
-	width: 50%;
-	display: block;
-    margin: 0 auto;
-}
-</style>
+			<h4>Register</h4>
 
-<body>
-	<div class="container">
-		<div class="row">
+			<h:form>
+				<span>Name</span>
+				<h:inputText value="#{registrationBean.user.name}"
+					styleClass="form-control" id="id_name" type="text" name="name"
+					maxlength="100" placeholder="Name" />
 
-			<div class="col-md-4"></div>
+				<span>Email</span>
+				<h:inputText value="#{registrationBean.user.email}"
+					styleClass="form-control" id="id_email" type="text" name="email"
+					maxlength="50" placeholder="Email" />
 
-			<div class="col-md-4">
+				<span>Username</span>
+				<h:inputText value="#{registrationBean.user.username}"
+					styleClass="form-control" id="id_username" type="text"
+					name="username" maxlength="100" placeholder="Username" />
 
-				<div class="registration">
-				
-					<img id="logo" src="logo.png" />
-				
-					<h4>Register</h4>
+				<span>Password</span>
+				<h:inputSecret value="#{registrationBean.user.password}"
+					styleClass="form-control" id="id_password" type="password"
+					name="password" maxlength="20" placeholder="Password" />
 
-					<h:form>
-						<span>Name</span>
-						<h:inputText value="#{registrationBean.user.name}"
-							styleClass="form-control" id="id_name" type="text" name="name"
-							maxlength="100" placeholder="Name" />
-						
-						<span>Email</span>
-						<h:inputText value="#{registrationBean.user.email}"
-							styleClass="form-control" id="id_email" type="text" name="email"
-							maxlength="50" placeholder="Email" />
+				<span>University</span>
+				<h:inputText value="#{registrationBean.user.university}"
+					styleClass="form-control" id="id_university" type="text"
+					name="university" maxlength="100" placeholder="University" />
 
-						<span>Username</span>
-						<h:inputText value="#{registrationBean.user.username}"
-							styleClass="form-control" id="id_username" type="text"
-							name="username" maxlength="100" placeholder="Username" />
+				<hr />
 
-						<span>Password</span>
-						<h:inputSecret value="#{registrationBean.user.password}"
-							styleClass="form-control" id="id_password" type="password"
-							name="password" maxlength="20" placeholder="Password" />
-							
-						<span>University</span>
-						<h:inputText value="#{registrationBean.user.university}"
-							styleClass="form-control" id="id_university" type="text"
-							name="university" maxlength="100" placeholder="University" />
-
-						<hr />
-						
-						<h:commandButton value="Sign up"
-							action="#{registrationBean.signUp}"
-							styleClass="form-control btn btn-default"></h:commandButton>
-					</h:form>
-				</div>
-			</div>
-
-			<div class="col-md-4"></div>
-
+				<h:commandButton value="Sign up" action="#{registrationBean.signUp}"
+					styleClass="form-control btn btn-default"></h:commandButton>
+			</h:form>
 		</div>
-
-
-	</div>
-</body>
+	</ui:define>
+</ui:composition>
 
 </html>
