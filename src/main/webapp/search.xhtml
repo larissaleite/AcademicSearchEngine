@@ -3,28 +3,74 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="templates/basic-template.xhtml">
 
 	<ui:define name="content">
-		<div class="search">
 
-			<h4>Search</h4>
+		<h:form id="searchForm" prependId="false">
 
-			<h:form>
+			<div class="search">
 
-				<h:inputText value="#{searchBean.query}" styleClass="form-control"
-					id="id_query" type="text" name="query" maxlength="100"
-					placeholder="Search query" />
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
 
-				<hr />
+						<h4>Search</h4>
 
-				<h:commandButton value="Search" action="#{searchBean.search}"
-					styleClass="form-control btn btn-default">
-				</h:commandButton>
-			</h:form>
-		</div>
+						<h:inputText value="#{searchBean.query}" styleClass="form-control"
+							id="query" type="text" name="query" maxlength="100"
+							placeholder="Search query" />
+
+						<hr />
+
+						<h:commandButton value="Search"
+							styleClass="form-control btn btn-default">
+							<f:ajax execute="@form" listener="#{searchBean.search}"
+								render="@form" />
+						</h:commandButton>
+					</div>
+
+					<div class="col-md-4"></div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-11">
+						<h:panelGroup id="searchResults" styleClass="results">
+							<h:panelGroup rendered="#{not empty searchBean.items}">
+
+								<p:dataTable styleClass="resultsTable" var="item"
+									value="#{searchBean.items}">
+									<p:column headerText="Id">
+										<h:outputText value="#{item.id}" />
+									</p:column>
+
+									<p:column headerText="Title">
+										<h:outputText value="#{item.title}" />
+									</p:column>
+
+									<p:column headerText="Author">
+										<ui:repeat var="author" value="#{item.authors}">
+											<h:outputText value="#{author}" />
+										</ui:repeat>
+									</p:column>
+
+									<p:column headerText="Score">
+										<h:outputText value="#{item.score}" />
+									</p:column>
+
+								</p:dataTable>
+
+							</h:panelGroup>
+						</h:panelGroup>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
 	</ui:define>
 </ui:composition>
 

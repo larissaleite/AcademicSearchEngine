@@ -30,6 +30,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 	<param-value>client</param-value> 
 </context-param>
 
+<!-- <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>fr.ufrt.searchengine.filter.LoginFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+</filter-mapping> -->
+
 <listener>
   <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  </listener>

@@ -1,5 +1,7 @@
 package fr.ufrt.searchengine.controllers;
 
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -21,15 +23,22 @@ public class LoginBean {
 	}
 
 	public String login() {
-		System.out.println("user = " + this.user.getUsername() + "--" + this.user.getPassword());
-		
 		boolean credentials = userDAO.checkCredentials(user);
 		
 		if (credentials) {
+			if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user") == null)
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+			
 			return "search.jsf";
 		}
 		return "index.jsf";
 	}	
+	
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		
+		return "index.jsf";
+	}
 
 	public User getUser() {
 		return user;

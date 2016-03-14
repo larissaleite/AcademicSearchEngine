@@ -4,14 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
       
-<head>
+<h:head>
 	<link
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
 		rel="stylesheet"></link>
 	<link href='http://fonts.googleapis.com/css?family=Raleway'
 		rel='stylesheet' type='text/css' />
+	<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet' type='text/css' />
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script
@@ -23,7 +25,6 @@
   
   <style>
 	body {
-		padding-top: 3%;
 		font-family: 'Raleway', serif;
 	}
 	
@@ -38,11 +39,14 @@
 		margin: 0 auto;
 	}
 	
-  </style>
+	.resultsTable {
+		padding-top:3%;
+	}	
+	</style>
   
-</head>
+</h:head>
 
-<body>
+<h:body>
 
 <div id="header">
     <ui:insert name="header">
@@ -52,21 +56,16 @@
 
 <div id="content">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-    			<ui:insert name="content"></ui:insert>
-    		</div>
-    	</div>
+    	<ui:insert name="content"></ui:insert>
     </div>
 </div>
 
-<div id="footer" class="navbar-fixed-bottom">
+<div id="footer">
     <ui:insert name="footer">
         <ui:include src="footer.xhtml"/>
     </ui:insert>
 </div>
 
-</body>
+</h:body>
 
 </html>

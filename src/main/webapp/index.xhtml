@@ -4,42 +4,46 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-<h:head></h:head>
+
 <ui:composition template="templates/basic-template.xhtml">
 
 	<ui:define name="content">
 
-		<div class="login">
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
 
-			<h4>Sign in</h4>
+				<div class="login">
 
-			<h:form>
+					<h4>Sign in</h4>
 
-				<span>Username</span>
-				<h:inputText value="#{loginBean.user.username}"
-					styleClass="form-control" id="id_username" type="text"
-					name="username" maxlength="100" placeholder="Username" />
+					<h:form>
+						<span>Username</span>
+						<h:inputText value="#{loginBean.user.username}"
+							styleClass="form-control" id="id_username" type="text"
+							name="username" maxlength="100" placeholder="Username" />
 
-				<span>Password</span>
-				<h:inputSecret value="#{loginBean.user.password}"
-					styleClass="form-control" id="id_password" type="password"
-					name="password" maxlength="20" placeholder="Password" />
+						<span>Password</span>
+						<h:inputSecret value="#{loginBean.user.password}"
+							styleClass="form-control" id="id_password" type="password"
+							name="password" maxlength="20" placeholder="Password" />
 
-				<hr />
+						<hr />
 
-				<h:commandButton value="Log in" action="#{loginBean.login}"
-					styleClass="form-control btn btn-default">
-				</h:commandButton>
+						<h:commandButton value="Log in" action="#{loginBean.login}"
+							styleClass="form-control btn btn-default">
+						</h:commandButton>
 
-				<br />
+						<br />
 
-				<p>
-					Not a user? Join our smart community
-					<h:commandLink value="Sign up" action="signup.jsf"></h:commandLink>
-				</p>
-
-			</h:form>
+						<p>
+							Not a user? Join our smart community
+							<h:commandLink value="Sign up" action="signup.jsf"></h:commandLink>
+						</p>
+					</h:form>
+				</div>
+			</div>
+			<div class="col-md-4"></div>
 		</div>
 	</ui:define>
 </ui:composition>

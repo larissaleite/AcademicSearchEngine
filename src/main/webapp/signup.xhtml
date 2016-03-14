@@ -9,41 +9,53 @@
 
 	<ui:define name="content">
 
-		<div class="registration">
+		<div class="row">
 
-			<h4>Register</h4>
+			<div class="col-md-4"></div>
 
-			<h:form>
-				<span>Name</span>
-				<h:inputText value="#{registrationBean.user.name}"
-					styleClass="form-control" id="id_name" type="text" name="name"
-					maxlength="100" placeholder="Name" />
+			<div class="col-md-4">
 
-				<span>Email</span>
-				<h:inputText value="#{registrationBean.user.email}"
-					styleClass="form-control" id="id_email" type="text" name="email"
-					maxlength="50" placeholder="Email" />
+				<div class="registration">
 
-				<span>Username</span>
-				<h:inputText value="#{registrationBean.user.username}"
-					styleClass="form-control" id="id_username" type="text"
-					name="username" maxlength="100" placeholder="Username" />
+					<h4>Register</h4>
 
-				<span>Password</span>
-				<h:inputSecret value="#{registrationBean.user.password}"
-					styleClass="form-control" id="id_password" type="password"
-					name="password" maxlength="20" placeholder="Password" />
+					<h:form>
+						<span>Name</span>
+						<h:inputText value="#{registrationBean.user.name}"
+							styleClass="form-control" id="id_name" type="text" name="name"
+							maxlength="100" placeholder="Name" />
 
-				<span>University</span>
-				<h:inputText value="#{registrationBean.user.university}"
-					styleClass="form-control" id="id_university" type="text"
-					name="university" maxlength="100" placeholder="University" />
+						<span>Email</span>
+						<h:inputText value="#{registrationBean.user.email}"
+							styleClass="form-control" id="id_email" type="text" name="email"
+							maxlength="50" placeholder="Email" />
 
-				<hr />
+						<span>Username</span>
+						<h:inputText value="#{registrationBean.user.username}"
+							styleClass="form-control" id="id_username" type="text"
+							name="username" maxlength="100" placeholder="Username" />
 
-				<h:commandButton value="Sign up" action="#{registrationBean.signUp}"
-					styleClass="form-control btn btn-default"></h:commandButton>
-			</h:form>
+						<span>Password</span>
+						<h:inputSecret value="#{registrationBean.user.password}"
+							styleClass="form-control" id="id_password" type="password"
+							name="password" maxlength="20" placeholder="Password" />
+
+						<span>University</span>
+						<h:inputText value="#{registrationBean.user.university}"
+							styleClass="form-control" id="id_university" type="text"
+							name="university" maxlength="100" placeholder="University" />
+
+						<hr />
+
+						<h:commandButton value="Sign up"
+							action="#{registrationBean.signUp}"
+							styleClass="form-control btn btn-default"></h:commandButton>
+					</h:form>
+				</div>
+
+			</div>
+
+			<div class="col-md-4"></div>
 		</div>
 	</ui:define>
 </ui:composition>
