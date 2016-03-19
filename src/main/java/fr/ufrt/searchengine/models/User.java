@@ -1,8 +1,10 @@
 package fr.ufrt.searchengine.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id_user", unique=true, nullable=false)
 	private int id;
 	
@@ -32,6 +34,10 @@ public class User implements Serializable {
 	
 	@Column(name="password", nullable=false)
 	private String password;
+	
+	@Column(name="interests")
+	@ElementCollection(targetClass=String.class)
+	private List<String> interests;
 	
 	public int getId() {
 		return id;
@@ -80,5 +86,13 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public List<String> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<String> interests) {
+		this.interests = interests;
+	}
+
 }

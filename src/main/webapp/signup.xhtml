@@ -44,9 +44,16 @@
 						<h:inputText value="#{registrationBean.user.university}"
 							styleClass="form-control" id="id_university" type="text"
 							name="university" maxlength="100" placeholder="University" />
-
+							
+						<h4>Areas of interest</h4>
+						<h:panelGroup layout="block" styleClass="selection">
+							<h:selectManyCheckbox layout="pageDirection" value="#{registrationBean.user.interests}">
+					   			<f:selectItems value="#{registrationBean.areasOfInterest}" />
+					   		</h:selectManyCheckbox>
+						</h:panelGroup>
+						
 						<hr />
-
+						
 						<h:commandButton value="Sign up"
 							action="#{registrationBean.signUp}"
 							styleClass="form-control btn btn-default"></h:commandButton>

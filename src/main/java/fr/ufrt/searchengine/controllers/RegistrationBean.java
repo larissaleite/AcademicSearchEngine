@@ -1,5 +1,8 @@
 package fr.ufrt.searchengine.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import fr.ufrt.searchengine.models.User;
 public class RegistrationBean {
 	
 	private User user;
+	private String[] areasOfInterest;
 	
 	public RegistrationBean() {
 		user = new User();
@@ -25,6 +29,29 @@ public class RegistrationBean {
 		
 		//treat errors
 		return "index.jsf";
+	}
+	
+	public String[] getAreasOfInterest() {
+		
+		areasOfInterest = new String[15];
+		
+		areasOfInterest[0] = "Machine Learning";
+		areasOfInterest[1] = "Natural Language Processing";
+		areasOfInterest[2] = "Security and Privacy";
+		areasOfInterest[3] = "Theory of Computation";
+		areasOfInterest[4] = "Software Engineering";
+		areasOfInterest[5] = "Computer Graphics";
+		areasOfInterest[6] = "Artificial Intelligence";
+		areasOfInterest[7] = "Big Data";
+		areasOfInterest[8] = "Computer Architecture";
+		areasOfInterest[9] = "Data Management";
+		areasOfInterest[10] = "Robotics";
+		areasOfInterest[11] = "Human Computer Interaction";
+		areasOfInterest[12] = "Data Warehousing";
+		areasOfInterest[13] = "Systems and Networking";
+		areasOfInterest[14] = "Programming Languages";
+		
+		return areasOfInterest;
 	}
 
 	public User getUser() {

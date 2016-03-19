@@ -16,6 +16,7 @@ public class Item {
 	@Field("author")
 	private
 	List<String> authors;
+	private boolean authorPreferred;
 	
 	public Item() {
 	} // Empty constructor is required
@@ -59,6 +60,14 @@ public class Item {
 
 	public void setTitle(List<String> title) {
 		this.title = title;
+	}
+
+	public boolean isAuthorPreferred() {
+		return authorPreferred;
+	}
+
+	public void setAuthorPreferred(boolean authorPreferred) {
+		this.authorPreferred = authorPreferred;
 	}
 
 }
