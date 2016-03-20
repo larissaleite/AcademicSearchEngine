@@ -1,14 +1,36 @@
 package fr.ufrt.searchengine.models;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Author {
 	
-	private String name;
-	private String university;
-	private String email;
-	private List<Author> coauthors;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_author", unique=true, nullable=false)
+	private int id;
 	
+	@Column(name="name", nullable=false)
+	private String name;
+	
+	@Column(name="university")
+	private String university;
+	
+	@Column(name="email")
+	private String email;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -31,14 +53,6 @@ public class Author {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Author> getCoauthors() {
-		return coauthors;
-	}
-
-	public void setCoauthors(List<Author> coauthors) {
-		this.coauthors = coauthors;
 	}
 
 }
