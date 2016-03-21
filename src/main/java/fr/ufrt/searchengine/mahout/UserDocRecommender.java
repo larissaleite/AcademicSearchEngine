@@ -1,9 +1,14 @@
 package fr.ufrt.searchengine.mahout;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.GenericBooleanPrefDataModel;
@@ -21,7 +26,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 public class UserDocRecommender {
 
 	public List<RecommendedItem> getRecommendedDocs(int userId) {
-		List<RecommendedItem> recommendations= new ArrayList();
+		List<RecommendedItem> recommendations = new ArrayList();
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(GenericBooleanPrefDataModel
 					.toDataMap(new FileDataModel(new File("C:\\Users\\Moditha\\Desktop\\user-doc-test.csv"))));
@@ -42,5 +47,28 @@ public class UserDocRecommender {
 			e.printStackTrace();
 		}
 		return recommendations;
+	}
+
+	public List<String> getDocumentNames(List<RecommendedItem> l) {
+		List<String> s = new ArrayList<String>();
+		FileInputStream fstream;
+		try {
+			fstream = new FileInputStream("D:\\docIds.csv");
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String strLine;
+			Map<Integer, String> m = new HashMap<Integer, String>();
+			while ((strLine = br.readLine()) != null) {
+				String[] arr = strLine.split(",");
+				m.put(Integer.parseInt(arr[0]), arr[1]);
+			}
+
+			for (RecommendedItem item : l) {
+				s.add(m.get(item.getItemID()));
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return s;
 	}
 }
