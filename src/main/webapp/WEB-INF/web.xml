@@ -47,6 +47,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
  </listener>
  
+  <listener>
+    <listener-class>fr.ufrt.searchengine.main.Config</listener-class>
+</listener>
+ 
  <context-param>
    <param-name>primefaces.THEME</param-name>
    <param-value>none</param-value>

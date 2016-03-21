@@ -45,9 +45,17 @@ public class UserDAO extends AbstractHibernateDAO<User> implements IUserDAO {
 			return null;
 		}
 	}
-
-	public void deleteUser(User user) {
+	
+	public void delete(User user) {
 		super.delete(user);
+	}
+
+	public User findByID(int id) {
+		return super.findOne(id);
+	}
+
+	public void updateUser(User user) {
+		super.update(user);
 	}
 
 }
