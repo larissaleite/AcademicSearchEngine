@@ -1,12 +1,14 @@
 package fr.ufrt.searchengine.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Author implements Serializable {
@@ -26,6 +28,9 @@ public class Author implements Serializable {
 	
 	@Column(name="email")
 	private String email;
+	
+	@ManyToMany(mappedBy="preferredAuthors")
+	private List<User> users;
 	
 	public int getId() {
 		return id;

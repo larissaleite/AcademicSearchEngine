@@ -19,7 +19,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 public class UserClusterRecomender {
 
 	public List<RecommendedItem> getRecommendedClusters(int userId) {
-		List<RecommendedItem> recommendations = new ArrayList();
+		List<RecommendedItem> recommendations = new ArrayList<RecommendedItem>();
 		try {
 			DataModel model = new FileDataModel(new File("D:\\user-cluster.csv"));
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
@@ -31,10 +31,8 @@ public class UserClusterRecomender {
 
 			// writer.close();
 		} catch (TasteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return recommendations;

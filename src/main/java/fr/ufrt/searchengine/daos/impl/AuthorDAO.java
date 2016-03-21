@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.ufrt.searchengine.daos.interfaces.IAuthorDAO;
 import fr.ufrt.searchengine.models.Author;
+import fr.ufrt.searchengine.models.User;
 
 @Repository
 @Transactional
@@ -43,6 +44,11 @@ public class AuthorDAO extends AbstractHibernateDAO<Author> implements IAuthorDA
 
 	public Author findById(int id) {
 		return super.findOne(id);
+	}
+
+	public List<Author> getPreferredAuthorsByUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

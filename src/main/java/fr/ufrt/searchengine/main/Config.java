@@ -14,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.ufrt.searchengine.daos.interfaces.IAuthorDAO;
-import fr.ufrt.searchengine.daos.interfaces.IUserAuthorDAO;
 import fr.ufrt.searchengine.daos.interfaces.IUserDAO;
 import fr.ufrt.searchengine.models.Author;
 import fr.ufrt.searchengine.models.User;
-import fr.ufrt.searchengine.models.UserAuthor;
 
 public class Config implements ServletContextListener {
 
@@ -27,9 +25,6 @@ public class Config implements ServletContextListener {
 	
 	@Autowired
 	private IUserDAO userDAO;
-	
-	/*@Autowired
-	private IUserAuthorDAO userAuthorDAO;*/
 	
 	public void csvReader() {		
 		String csvFile = "/Users/larissaleite/Downloads/userauthors.csv";
@@ -58,12 +53,6 @@ public class Config implements ServletContextListener {
 					
 					Author author = authorDAO.findByName(authorName);
 					
-					/*UserAuthor userAuthor = new UserAuthor();
-					
-					userAuthor.setAuthor(author);
-					userAuthor.setUser(user);
-					
-					userAuthorDAO.register(userAuthor);*/
 					authors.add(author);
 				} else {
 					break;

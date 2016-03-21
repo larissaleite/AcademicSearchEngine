@@ -21,7 +21,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 public class UserDocRecommender {
 
 	public List<RecommendedItem> getRecommendedDocs(int userId) {
-		List<RecommendedItem> recommendations= new ArrayList();
+		List<RecommendedItem> recommendations= new ArrayList<RecommendedItem>();
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(GenericBooleanPrefDataModel
 					.toDataMap(new FileDataModel(new File("C:\\Users\\Moditha\\Desktop\\user-doc-test.csv"))));
@@ -35,10 +35,8 @@ public class UserDocRecommender {
 			recommendations = cachingRecommender.recommend(115, 50);
 
 		} catch (TasteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return recommendations;
