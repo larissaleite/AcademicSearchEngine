@@ -42,7 +42,7 @@
 						<h:panelGroup id="searchResults" styleClass="results">
 							<h:panelGroup rendered="#{not empty searchBean.items}">
 							
-								<p:dataTable styleClass="resultsTable" var="item"
+								<p:dataTable tableStyleClass="resultsTable table table-striped" var="item"
 									value="#{searchBean.items}">
 									<p:column headerText="Id">
 										<h:outputText value="#{item.id}" />
@@ -63,7 +63,7 @@
 									</p:column>
 
 									<p:column headerText="">
-										 <h:commandButton value="Download">
+										 <h:commandButton styleClass="btn btn-info" value="Download">
 											 <p:ajax listener="#{searchBean.saveInteraction(item.id)}" />  
 										</h:commandButton>
 										
