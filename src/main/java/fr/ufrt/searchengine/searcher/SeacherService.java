@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.ufrt.searchengine.models.Paper;
-import fr.ufrt.searchengine.searcher.solr.SolrSearcher;
 
 @Service("searcherService")
 public class SeacherService {

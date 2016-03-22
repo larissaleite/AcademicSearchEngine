@@ -36,14 +36,14 @@
 					<div class="col-md-4"></div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-11">
-						<h:panelGroup id="searchResults" styleClass="results">
-							<h:panelGroup rendered="#{not empty searchBean.items}">
-							
-								<p:dataTable tableStyleClass="resultsTable table table-striped" var="item"
-									value="#{searchBean.items}">
+				<h:panelGroup id="searchResults" styleClass="results">
+					<h:panelGroup rendered="#{not empty searchBean.items}">
+						<div class="row">
+							<div class="col-md-1"></div>
+							<div class="col-md-11">
+
+								<p:dataTable tableStyleClass="resultsTable table table-striped"
+									var="item" value="#{searchBean.items}">
 									<p:column headerText="Id">
 										<h:outputText value="#{item.id}" />
 									</p:column>
@@ -54,7 +54,8 @@
 
 									<p:column headerText="Author">
 										<ui:repeat var="author" value="#{item.authors}">
-											<h:outputText value="#{author}" styleClass="#{item.authorPreferred ? 'highlight-author' : 'author'}"/>
+											<h:outputText value="#{author}"
+												styleClass="#{item.authorPreferred ? 'highlight-author' : 'author'}" />
 										</ui:repeat>
 									</p:column>
 
@@ -63,17 +64,18 @@
 									</p:column>
 
 									<p:column headerText="">
-										 <h:commandButton styleClass="btn btn-info" value="Download">
-											 <p:ajax listener="#{searchBean.saveInteraction(item.id)}" />  
+										<h:commandButton styleClass="btn btn-info" value="Download">
+											<p:ajax listener="#{searchBean.saveInteraction(item.id)}" />
 										</h:commandButton>
-										
+
 									</p:column>
 								</p:dataTable>
 
-							</h:panelGroup>
-						</h:panelGroup>
-					</div>
-				</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+
 			</div>
 		</h:form>
 

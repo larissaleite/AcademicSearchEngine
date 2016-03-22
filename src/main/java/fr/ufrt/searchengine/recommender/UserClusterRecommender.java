@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.mahout;
+package fr.ufrt.searchengine.recommender;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,18 +21,31 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
-public class UserClusterRecomender {
+public class UserClusterRecommender {
+
+	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
+	
+	private List<RecommendedItem> recommendations;
+	
+	public UserClusterRecommender() {
+		recommendations = new ArrayList<RecommendedItem>();
+	}
 
 	public List<RecommendedItem> getRecommendedClusters(int userId) {
-		List<RecommendedItem> recommendations = new ArrayList<RecommendedItem>();
+		
 		try {
-			DataModel model = new FileDataModel(new File("D:\\user-cluster.csv"));
+			DataModel model = new FileDataModel(new File(dirPath
+					+ "user-cluster-weighted.csv"));
+			
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
 
-			UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, similarity, model);
-			UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
+			UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1,
+					similarity, model);
+			
+			UserBasedRecommender recommender = new GenericUserBasedRecommender(
+					model, neighborhood, similarity);
 
-			recommendations = recommender.recommend(userId, 10);
+			recommendations = recommender.recommend(25, 6);
 
 			// writer.close();
 		} catch (TasteException e) {
@@ -43,26 +56,32 @@ public class UserClusterRecomender {
 		return recommendations;
 	}
 
-	public List<String> getClusterNames(List<RecommendedItem> l) {
-		List<String> s = new ArrayList<String>();
+	public List<String> getClusterNames(List<RecommendedItem> recommendedItems) {
+		List<String> clusterNames = new ArrayList<String>();
 		FileInputStream fstream;
+		
 		try {
-			fstream = new FileInputStream("D:\\clusters.csv");
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			fstream = new FileInputStream(dirPath + "clusters.csv");
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					fstream));
+			
 			String strLine;
-			Map<Integer,String> m= new HashMap<Integer, String>();
+			
+			Map<Integer, String> m = new HashMap<Integer, String>();
+			
 			while ((strLine = br.readLine()) != null) {
-				String[] arr=strLine.split(",");
+				String[] arr = strLine.split(",");
 				m.put(Integer.parseInt(arr[0]), arr[1]);
 			}
 
-			for (RecommendedItem item : l) {
-				s.add(m.get(item.getItemID()));
+			for (RecommendedItem item : recommendedItems) {
+				clusterNames.add(m.get((int) item.getItemID()));
 			}
+			
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return s;
+		return clusterNames;
 	}
 }

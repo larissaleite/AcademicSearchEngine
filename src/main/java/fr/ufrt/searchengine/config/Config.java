@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.main;
+package fr.ufrt.searchengine.config;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

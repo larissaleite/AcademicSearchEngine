@@ -6,12 +6,31 @@
 	<h:form id="headerForm">
 		<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<p class="nav navbar-text navbar-right">
-				<h:panelGroup id="loggedInUser"	rendered="#{not empty user}">
-					<i class="fa fa-user fa-fw"></i><h:outputText value="#{user.username}"></h:outputText>
-					<h:commandLink value="  (sign out)" action="#{loginBean.logout}"></h:commandLink>
-				</h:panelGroup>
-			</p>
+
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">AcademicSearchEngine</a>
+			</div>
+
+			<h:panelGroup id="loggedInUser" rendered="#{not empty user}">
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="home.jsf">Home</a></li>
+						<li><a href="search.jsf">Search</a></li>
+
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<p style="margin-top: 13%;">
+							<i class="fa fa-user fa-fw"></i>
+							<h:outputText value="#{user.username}"></h:outputText>
+							<h:commandLink value="  (sign out)" action="#{loginBean.logout}"></h:commandLink>
+						</p>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+
+			</h:panelGroup>
+
 		</div>
 		</nav>
 	</h:form>

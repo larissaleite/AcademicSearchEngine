@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.mahout;
+package fr.ufrt.searchengine.recommender;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,19 +25,31 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
 public class UserDocRecommender {
 
+	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
+
+	private List<RecommendedItem> recommendations;
+	
+	public UserDocRecommender () {
+		recommendations = new ArrayList<RecommendedItem>();
+	}
+
 	public List<RecommendedItem> getRecommendedDocs(int userId) {
-		List<RecommendedItem> recommendations = new ArrayList();
+
 		try {
-			DataModel model = new GenericBooleanPrefDataModel(GenericBooleanPrefDataModel
-					.toDataMap(new FileDataModel(new File("C:\\Users\\Moditha\\Desktop\\user-doc-test.csv"))));
+			DataModel model = new GenericBooleanPrefDataModel(
+					GenericBooleanPrefDataModel.toDataMap(new FileDataModel(
+							new File(dirPath + "user-doc-test.csv"))));
 
 			UserSimilarity userSimilarity = new LogLikelihoodSimilarity(model);
 
-			UserNeighborhood neighborhood = new NearestNUserNeighborhood(userId, userSimilarity, model);
+			UserNeighborhood neighborhood = new NearestNUserNeighborhood(
+					10, userSimilarity, model);
 
-			Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, userSimilarity);
+			Recommender recommender = new GenericUserBasedRecommender(model,
+					neighborhood, userSimilarity);
+			
 			Recommender cachingRecommender = new CachingRecommender(recommender);
-			recommendations = cachingRecommender.recommend(115, 50);
+			recommendations = cachingRecommender.recommend(115, 10);
 
 		} catch (TasteException e) {
 			e.printStackTrace();
@@ -47,26 +59,34 @@ public class UserDocRecommender {
 		return recommendations;
 	}
 
-	public List<String> getDocumentNames(List<RecommendedItem> l) {
-		List<String> s = new ArrayList<String>();
+	public List<String> getDocumentNames(List<RecommendedItem> recommendedItems) {
+		List<String> documentNames = new ArrayList<String>();
 		FileInputStream fstream;
 		try {
-			fstream = new FileInputStream("D:\\docIds.csv");
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			fstream = new FileInputStream(dirPath + "docIds.csv");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					fstream));
+			
 			String strLine;
+			
 			Map<Integer, String> m = new HashMap<Integer, String>();
+			
 			while ((strLine = br.readLine()) != null) {
 				String[] arr = strLine.split(",");
 				m.put(Integer.parseInt(arr[0]), arr[1]);
 			}
 
-			for (RecommendedItem item : l) {
-				s.add(m.get(item.getItemID()));
+			for (RecommendedItem item : recommendedItems) {
+				String name = m.get((int) item.getItemID());
+				if (name != null)
+					documentNames.add(name);
 			}
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return s;
+		return documentNames;
 	}
+
 }

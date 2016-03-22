@@ -48,7 +48,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  </listener>
  
  <listener>
-    <listener-class>fr.ufrt.searchengine.main.Config</listener-class>
+    <listener-class>fr.ufrt.searchengine.config.Config</listener-class>
 </listener>
 
 <context-param>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="templates/basic-template.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="homeForm">
+
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-7">
+					<h:panelGroup id="documentRecommendations" styleClass="results">
+						<h:panelGroup
+							rendered="#{not empty homeBean.documentsRecommendations}">
+
+							<p:dataTable binding="#{tableDoc}"
+								tableStyleClass="resultsTable table table-striped" var="row"
+								value="#{homeBean.documentsRecommendations}">
+
+								<p:column headerText="Recommended Documents">
+									<h:outputText
+										value="#{homeBean.documentsRecommendations[tableDoc.rowIndex]}" />
+								</p:column>
+								
+								<p:column headerText="">
+								</p:column>
+								
+								
+								<p:column headerText="">
+									<h:commandButton styleClass="btn btn-info" value="Download">
+										</h:commandButton>
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+
+				<div class="col-md-4 keywordRecommendation">
+					<h:panelGroup id="clusterRecommendations" styleClass="results">
+						<h:panelGroup
+							rendered="#{not empty homeBean.clusterRecommendations}">
+							<p style="font-weight:bold;">You might also be interested in:</p>
+							<div class="keywords">
+								<ui:repeat value="#{homeBean.clusterRecommendations}"
+									var="keyword">
+									<p class="keyword">#{keyword}</p>
+								</ui:repeat>
+							</div>
+
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

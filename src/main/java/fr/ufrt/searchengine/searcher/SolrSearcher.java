@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.searcher.solr;
+package fr.ufrt.searchengine.searcher;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +11,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 
 import fr.ufrt.searchengine.models.Item;
 import fr.ufrt.searchengine.models.Paper;
-import fr.ufrt.searchengine.searcher.Searcher;
 
 public class SolrSearcher extends Searcher {
 
