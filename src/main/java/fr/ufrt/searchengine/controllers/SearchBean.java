@@ -72,21 +72,16 @@ public class SearchBean {
 		List<Author> authors = user.getPreferredAuthors();
 
 		for (Item item : results) {
-			String[] idSplit = item.getId().split("/");
-			String id = idSplit[idSplit.length - 1];
-
-			if (documentsRecommendations.contains(id)) {
-				item.setRecommended(true);
-			}
-			if (item.getAuthors() != null) {
-				for (Author author : authors) {
-					if (item.getAuthors().get(0).contains(author.getName())) {
-						item.setAuthorPreferred(true);
-					}
-				}
-			}
+			checkIfItemIsRecommended(item);
+			checkIfAuthorIsPreferred(authors, item);
 		}
 
+		sortResultsByRecommendation(results);
+
+		setItems(results);
+	}
+
+	private void sortResultsByRecommendation(List<Item> results) {
 		// Sorting to put recommended ones first on the list
 		Collections.sort(results, new Comparator<Item>() {
 			@Override
@@ -95,8 +90,25 @@ public class SearchBean {
 						doc1.isRecommended());
 			}
 		});
+	}
 
-		setItems(results);
+	private void checkIfAuthorIsPreferred(List<Author> authors, Item item) {
+		if (item.getAuthors() != null) {
+			for (Author author : authors) {
+				if (item.getAuthors().get(0).contains(author.getName())) {
+					item.setAuthorPreferred(true);
+				}
+			}
+		}
+	}
+
+	private void checkIfItemIsRecommended(Item item) {
+		String[] idSplit = item.getId().split("/");
+		String id = idSplit[idSplit.length - 1];
+
+		if (documentsRecommendations.contains(id)) {
+			item.setRecommended(true);
+		}
 	}
 
 	public void saveInteraction(String id) {

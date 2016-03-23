@@ -10,6 +10,6 @@ public abstract class DocumentRecommender implements Recommender {
 		this.successor = successor;
 	}
 	
-	public abstract List<String> getRecommendations(List<String> recommendations, int userId);
+	public abstract List<String> getRecommendations(List<String> recommendations, int id);
 
 }

@@ -25,8 +25,8 @@ public class UserClusterRecommender implements Recommender {
 
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
 	
-	public List<String> getRecommendations(List<String> recommendations, int userId) {
-		List<RecommendedItem> recommendedDocs = getRecommendedClusters(userId);
+	public List<String> getRecommendations(List<String> recommendations, int id) {
+		List<RecommendedItem> recommendedDocs = getRecommendedClusters(id);
 		List<String> clusterNames = getClusterNames(recommendedDocs);
 		
 		for (String cluster : clusterNames) {

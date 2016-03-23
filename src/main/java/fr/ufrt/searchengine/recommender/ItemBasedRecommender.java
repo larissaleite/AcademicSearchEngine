@@ -26,9 +26,9 @@ public class ItemBasedRecommender extends DocumentRecommender {
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
 	
 	@Override
-	public List<String> getRecommendations(List<String> recommendations, int userId) {
+	public List<String> getRecommendations(List<String> recommendations, int id) {
 		
-		List<RecommendedItem> recommendedDocs = getRecommendedDocs(userId);
+		List<RecommendedItem> recommendedDocs = getRecommendedDocs(id);
 		List<String> documentNames = getDocumentNames(recommendedDocs);
 		
 		for (String document : documentNames) {
@@ -37,7 +37,7 @@ public class ItemBasedRecommender extends DocumentRecommender {
 		}
 		
 		if (this.successor != null) {
-			return this.successor.getRecommendations(recommendations, userId);
+			return this.successor.getRecommendations(recommendations, id);
 		}
 		return recommendations;
 	}
