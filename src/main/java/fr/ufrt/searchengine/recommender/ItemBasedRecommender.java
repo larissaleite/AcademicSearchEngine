@@ -21,17 +21,29 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
-public class ItemBasedRecommender {
+public class ItemBasedRecommender extends DocumentRecommender {
 	
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
-
-	private List<RecommendedItem> recommendations;
 	
-	public ItemBasedRecommender () {
-		recommendations = new ArrayList<RecommendedItem>();
+	@Override
+	public List<String> getRecommendations(List<String> recommendations, int userId) {
+		
+		List<RecommendedItem> recommendedDocs = getRecommendedDocs(userId);
+		List<String> documentNames = getDocumentNames(recommendedDocs);
+		
+		for (String document : documentNames) {
+			if (!recommendations.contains(document))
+				recommendations.add(document);
+		}
+		
+		if (this.successor != null) {
+			return this.successor.getRecommendations(recommendations, userId);
+		}
+		return recommendations;
 	}
 
 	public List<RecommendedItem> getRecommendedDocs(int userId) {
+		List<RecommendedItem> recommendations = new ArrayList<RecommendedItem>();
 
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(

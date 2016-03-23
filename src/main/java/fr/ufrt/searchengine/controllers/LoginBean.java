@@ -31,7 +31,7 @@ public class LoginBean {
 				FacesContext.getCurrentInstance().getExternalContext()
 						.getSessionMap().put("user", registeredUser);
 
-			return "home.jsf";
+			return "search.jsf";
 		}
 		return "index.jsf";
 	}

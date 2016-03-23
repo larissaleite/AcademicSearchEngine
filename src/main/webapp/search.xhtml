@@ -36,11 +36,11 @@
 					<div class="col-md-4"></div>
 				</div>
 
-				<h:panelGroup id="searchResults" styleClass="results">
-					<h:panelGroup rendered="#{not empty searchBean.items}">
-						<div class="row">
-							<div class="col-md-1"></div>
-							<div class="col-md-11">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-8">
+						<h:panelGroup id="searchResults" styleClass="results">
+							<h:panelGroup rendered="#{not empty searchBean.items}">
 
 								<p:dataTable tableStyleClass="resultsTable table table-striped"
 									var="item" value="#{searchBean.items}">
@@ -71,11 +71,28 @@
 									</p:column>
 								</p:dataTable>
 
-							</div>
-						</div>
-					</h:panelGroup>
-				</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
 
+					</div>
+
+					<div class="col-md-3 keywordRecommendation">
+						<h:panelGroup id="clusterRecommendations" styleClass="results">
+							<h:panelGroup
+								rendered="#{not empty searchBean.clusterRecommendations and not empty searchBean.items}">
+								<p style="font-weight: bold;">You might also be interested
+									in:</p>
+								<div class="keywords">
+									<ui:repeat value="#{searchBean.clusterRecommendations}"
+										var="keyword">
+										<p class="keyword">#{keyword}</p>
+									</ui:repeat>
+								</div>
+
+							</h:panelGroup>
+						</h:panelGroup>
+					</div>
+				</div>
 			</div>
 		</h:form>
 

@@ -23,17 +23,29 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
-public class UserDocRecommender {
+public class UserBasedRecommender extends DocumentRecommender {
 
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
-
-	private List<RecommendedItem> recommendations;
 	
-	public UserDocRecommender () {
-		recommendations = new ArrayList<RecommendedItem>();
+	@Override
+	public List<String> getRecommendations(List<String> recommendations, int userId) {
+		
+		List<RecommendedItem> recommendedDocs = getRecommendedDocs(userId);
+		List<String> documentNames = getDocumentNames(recommendedDocs);
+		
+		for (String document : documentNames) {
+			if (!recommendations.contains(document))
+				recommendations.add(document);
+		}
+		
+		if (this.successor != null) {
+			return this.successor.getRecommendations(recommendations, userId);
+		}
+		return recommendations;
 	}
 
 	public List<RecommendedItem> getRecommendedDocs(int userId) {
+		List<RecommendedItem> recommendations = new ArrayList<RecommendedItem>();
 
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(
@@ -59,7 +71,7 @@ public class UserDocRecommender {
 		return recommendations;
 	}
 
-	public List<String> getDocumentNames(List<RecommendedItem> recommendedItems) {
+	private List<String> getDocumentNames(List<RecommendedItem> recommendedItems) {
 		List<String> documentNames = new ArrayList<String>();
 		FileInputStream fstream;
 		try {

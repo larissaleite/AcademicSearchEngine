@@ -17,6 +17,7 @@ public class Item {
 	private
 	List<String> authors;
 	private boolean authorPreferred;
+	private boolean recommended;
 	
 	public Item() {
 	} // Empty constructor is required
@@ -68,6 +69,14 @@ public class Item {
 
 	public void setAuthorPreferred(boolean authorPreferred) {
 		this.authorPreferred = authorPreferred;
+	}
+
+	public boolean isRecommended() {
+		return recommended;
+	}
+
+	public void setRecommended(boolean recommended) {
+		this.recommended = recommended;
 	}
 
 }

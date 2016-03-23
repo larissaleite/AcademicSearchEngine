@@ -21,17 +21,25 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
-public class UserClusterRecommender {
+public class UserClusterRecommender implements Recommender {
 
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
 	
-	private List<RecommendedItem> recommendations;
-	
-	public UserClusterRecommender() {
-		recommendations = new ArrayList<RecommendedItem>();
+	public List<String> getRecommendations(List<String> recommendations, int userId) {
+		List<RecommendedItem> recommendedDocs = getRecommendedClusters(userId);
+		List<String> clusterNames = getClusterNames(recommendedDocs);
+		
+		for (String cluster : clusterNames) {
+			if (!recommendations.contains(cluster))
+				recommendations.add(cluster);
+		}
+		
+		return recommendations;
 	}
+	
 
 	public List<RecommendedItem> getRecommendedClusters(int userId) {
+		List<RecommendedItem> recommendations = new ArrayList<RecommendedItem>();
 		
 		try {
 			DataModel model = new FileDataModel(new File(dirPath
@@ -47,7 +55,6 @@ public class UserClusterRecommender {
 
 			recommendations = recommender.recommend(25, 6);
 
-			// writer.close();
 		} catch (TasteException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

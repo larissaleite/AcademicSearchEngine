@@ -2,17 +2,8 @@ package fr.ufrt.searchengine.recommender;
 
 import java.util.List;
 
-import fr.ufrt.searchengine.models.Item;
+public interface Recommender {
+	
+	public List<String> getRecommendations(List<String> recommendations, int userId);
 
-public abstract class Recommender {
-	
-	public List<Item> recommend(int userId) {
-		getRecommendations(userId);
-		return convertRecommendationsToItems();
-	}
-	
-	protected abstract void getRecommendations(int userId);
-
-	protected abstract List<Item> convertRecommendationsToItems();
-	
 }
