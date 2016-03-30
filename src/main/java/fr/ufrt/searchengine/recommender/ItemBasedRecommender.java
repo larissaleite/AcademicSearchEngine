@@ -54,7 +54,7 @@ public class ItemBasedRecommender extends DocumentRecommender {
 			
 			Recommender recommender = new GenericItemBasedRecommender(model, itemSimilarity);
 			Recommender cachingRecommender = new CachingRecommender(recommender);
-
+			
 			recommendations = cachingRecommender.recommend(115, 10);
 
 		} catch (TasteException e) {

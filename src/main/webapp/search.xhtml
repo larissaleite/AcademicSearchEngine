@@ -64,9 +64,12 @@
 									</p:column>
 
 									<p:column headerText="">
-										<h:commandButton styleClass="btn btn-info" value="Download">
-											<p:ajax listener="#{searchBean.saveInteraction(item.id)}" />
-										</h:commandButton>
+										<p:commandButton styleClass="btn btn-info" value="Download"
+											 >
+											<p:ajax listener="#{searchBean.saveInteraction(item.id)}"
+											oncomplete="$('#dlg').modal('show'); "
+												update=":modalForm:dlgContent" />
+										</p:commandButton>
 
 									</p:column>
 								</p:dataTable>
@@ -94,8 +97,37 @@
 					</div>
 				</div>
 			</div>
+
+
+
 		</h:form>
 
+		<h:form id="modalForm">
+			<h:panelGroup id="dlgContent">
+				<div class="modal fade" id="dlg" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title">Similar Items</h4>
+							</div>
+							<div class="modal-body">
+								<ui:repeat value="#{searchBean.similarItems}" var="item">
+									<p>#{item}</p>
+								</ui:repeat>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:panelGroup>
+		</h:form>
 	</ui:define>
 </ui:composition>
 

@@ -5,7 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -22,45 +25,55 @@ public class Config implements ServletContextListener {
 
 	@Autowired
 	private IAuthorDAO authorDAO;
-	
+
 	@Autowired
 	private IUserDAO userDAO;
-	
-	public void csvReader() {		
-		String csvFile = "/Users/larissaleite/Downloads/userauthors.csv";
 
-		
-		User user = userDAO.findByID(1);
-		List<Author> authors = new ArrayList<Author>();
-		
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void saveUsersAuthors() {
+		String csvFile = "/Users/larissaleite/Downloads/ir-docs/userauthors.csv";
+
 		BufferedReader br = null;
-		
+
 		String line = null;
 
 		String authorName = null;
-		
+
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
 
 			// ignore first line
 			line = br.readLine();
-	
+
+			Map<String, List<Author>> userAuthors = new HashMap<String, List<Author>>();
+
 			while ((line = br.readLine()) != null) {
 				String[] columns = line.split(",");
-				
-				if (columns[0].equals("1")) {
-					authorName = columns[1];
-					
-					Author author = authorDAO.findByName(authorName);
-					
-					authors.add(author);
-				} else {
-					break;
+
+				String userId = columns[0];
+
+				if (userAuthors.get(userId) == null) {
+					List<Author> authors = new ArrayList<Author>();
+					userAuthors.put(userId, authors);
 				}
+				authorName = columns[1].replaceAll("[^\\w\\s]+", ""); // cleaning
+																		// author's
+																		// name
+
+				Author author = authorDAO.findByName(authorName);
+
+				userAuthors.get(userId).add(author);
 			}
-			
-			user.setPreferredAuthors(authors);
-			userDAO.updateUser(user);
+
+			Iterator it = userAuthors.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				System.out.println(pair.getKey() + " = " + pair.getValue());
+				User user = userDAO.findByID(Integer.parseInt(pair.getKey()
+						.toString()));
+				user.setPreferredAuthors((List<Author>) pair.getValue());
+				userDAO.updateUser(user);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -71,15 +84,36 @@ public class Config implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
 		WebApplicationContextUtils
-        .getRequiredWebApplicationContext(sce.getServletContext())
-        .getAutowireCapableBeanFactory()
-        .autowireBean(this);
-		
-		//csvReader();
+				.getRequiredWebApplicationContext(sce.getServletContext())
+				.getAutowireCapableBeanFactory().autowireBean(this);
+
+		// create users -- missing list of interests; preferred authors inserted
+		// after
+		// createUsers();
+
+		// saveUsersInteractions();
+		//saveUsersAuthors(); // normally from the interactions???
+		// saveUsersQueries();
+
+	}
+
+	private void createUsers() {
+		for (int i = 2; i < 116; i++) {
+			User user = new User();
+
+			user.setEmail("user" + i + "@email.com");
+			user.setId(i);
+			user.setName("user" + i);
+			user.setPassword("123");
+			user.setUniversity("UFRT");
+			user.setUsername("user" + i);
+
+			userDAO.register(user);
+		}
 	}
 
 	public void contextDestroyed(ServletContextEvent sce) {
-		
+
 	}
 
 }

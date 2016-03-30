@@ -21,7 +21,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
-public class UserClusterRecommender implements Recommender {
+public class UserKeywordRecommender implements Recommender {
 
 	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
 	
