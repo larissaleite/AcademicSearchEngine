@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.recommender;
+package fr.ufrt.searchengine.recommender.content;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,9 +19,11 @@ import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
+import fr.ufrt.searchengine.recommender.Recommender;
+
 public class ItemItemRecommender implements Recommender {
 
-private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
+	private final String dirPath = "/Users/larissaleite/Downloads/users_stage3/";
 	
 	@Override
 	public List<String> getRecommendations(List<String> recommendations, int id) {
@@ -43,7 +45,7 @@ private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(
 					GenericBooleanPrefDataModel.toDataMap(new FileDataModel(
-							new File(dirPath + "user-doc-test.csv"))));
+							new File(dirPath + "user_doc.csv"))));
 
 			ItemSimilarity itemSimilarity = new LogLikelihoodSimilarity(model);
 			

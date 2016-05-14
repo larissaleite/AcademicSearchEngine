@@ -27,6 +27,9 @@ public class Interaction implements Serializable {
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_user")
 	private User user;
+	
+	@Column(name="weight")
+	private float weight;
 
 	public int getId() {
 		return id;
@@ -50,6 +53,14 @@ public class Interaction implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
 	}
 	
 }

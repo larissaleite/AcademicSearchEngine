@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.recommender;
+package fr.ufrt.searchengine.recommender.collaborative;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,10 +23,10 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
-public class UserBasedRecommender extends DocumentRecommender {
+import fr.ufrt.searchengine.recommender.DocumentRecommender;
 
-	private final String dirPath = "/Users/larissaleite/Downloads/ir-docs/";
-	
+public class DocumentUserBasedRecommender extends DocumentRecommender {
+
 	@Override
 	public List<String> getRecommendations(List<String> recommendations, int id) {
 		
@@ -50,7 +50,7 @@ public class UserBasedRecommender extends DocumentRecommender {
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(
 					GenericBooleanPrefDataModel.toDataMap(new FileDataModel(
-							new File(dirPath + "user-doc-test.csv"))));
+							new File(dirPath + "user_doc.csv"))));
 
 			UserSimilarity userSimilarity = new LogLikelihoodSimilarity(model);
 
@@ -61,7 +61,7 @@ public class UserBasedRecommender extends DocumentRecommender {
 					neighborhood, userSimilarity);
 			
 			Recommender cachingRecommender = new CachingRecommender(recommender);
-			recommendations = cachingRecommender.recommend(115, 10);
+			recommendations = cachingRecommender.recommend(userId, 10);
 
 		} catch (TasteException e) {
 			e.printStackTrace();

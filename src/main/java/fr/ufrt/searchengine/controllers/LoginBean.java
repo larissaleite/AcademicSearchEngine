@@ -59,6 +59,9 @@ public class LoginBean {
 		
 		searchBean.setDocumentsRecommendations(documentsRecommendations);
 		
+		searchBean.mapAuthorsWeight();
+		searchBean.mapConferencesWeight();
+		
 	}
 
 	public String logout() {

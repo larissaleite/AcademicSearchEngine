@@ -6,36 +6,47 @@ import org.apache.solr.client.solrj.beans.Field;
 
 public class Item {
 	
-	@Field("id")
-	String id;
+	@Field("docid")
+	private
+	List<Long> id;
 	@Field("score")
 	Float score;
-	@Field("title")
+	@Field("doctitle")
 	private
 	List<String> title;
-	@Field("author")
+	@Field("docauthor")
 	private
 	List<String> authors;
+	@Field("docconference")
+	private List<String> conference;
+	@Field("docyear")
+	private List<String> year;
+	
 	private boolean authorPreferred;
+	private boolean conferencePreferred;
 	private boolean recommended;
+	private boolean showRating;
+	private int rating;
 	
 	public Item() {
 	} // Empty constructor is required
-
-	public Item(String id, Float score, List<String> title, List<String> authors) {
+	
+	public Item(List<Long> id, Float score, List<String> title, List<String> authors, List<String> conference, List<String> year) {
 		super();
-		this.id = id;
+		this.setId(id);
 		this.score = score;
 		this.setTitle(title);
 		this.setAuthors(authors);
+		this.setConference(conference);
+		this.setYear(year);
 	}
-
+	
 	// Getter Setters
-	public String getId() {
+	public List<Long> getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(List<Long> id) {
 		this.id = id;
 	}
 
@@ -77,6 +88,50 @@ public class Item {
 
 	public void setRecommended(boolean recommended) {
 		this.recommended = recommended;
+	}
+
+	public boolean isShowRating() {
+		return showRating;
+	}
+
+	public void setShowRating(boolean showRating) {
+		this.showRating = showRating;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+//	public String getConference() {
+//		return conference;
+//	}
+//
+//	public void setConference(String conference) {
+//		this.conference = conference;
+//	}
+
+	public boolean isConferencePreferred() {
+		return conferencePreferred;
+	}
+
+	public void setConferencePreferred(boolean conferencePreferred) {
+		this.conferencePreferred = conferencePreferred;
+	}
+
+	public List<String> getConference() {
+		return conference;
+	}
+
+	public void setConference(List<String> conference) {
+		this.conference = conference;
+	}
+
+	public void setYear(List<String> year) {
+		this.year = year;
 	}
 
 }

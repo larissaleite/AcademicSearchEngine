@@ -42,11 +42,11 @@
 						<h:panelGroup id="searchResults" styleClass="results">
 							<h:panelGroup rendered="#{not empty searchBean.items}">
 
-								<p:dataTable tableStyleClass="resultsTable table table-striped"
+								<p:dataTable rowIndexVar="rowId" id="resultsTable" tableStyleClass="resultsTable table table-striped"
 									var="item" value="#{searchBean.items}">
-									<p:column headerText="Id">
+									<!-- <p:column headerText="Id">
 										<h:outputText value="#{item.id}" />
-									</p:column>
+									</p:column> -->
 
 									<p:column headerText="Title">
 										<h:outputText value="#{item.title}" />
@@ -58,19 +58,48 @@
 												styleClass="#{item.authorPreferred ? 'highlight-author' : 'author'}" />
 										</ui:repeat>
 									</p:column>
-
-									<p:column headerText="Score">
-										<h:outputText value="#{item.score}" />
+									
+									<p:column headerText="Conference">
+										<h:outputText value="#{item.conference}"
+												styleClass="#{item.conferencePreferred ? 'highlight-author' : 'author'}" />
 									</p:column>
+									
+									<!-- <p:column headerText="Year">
+										<h:outputText value="#{item.year}" />
+									</p:column> -->
+
+									<!-- <p:column headerText="Score">
+										<h:outputText value="#{item.score}" />
+									</p:column> -->
 
 									<p:column headerText="">
-										<p:commandButton styleClass="btn btn-info" value="Download"
-											 >
-											<p:ajax listener="#{searchBean.saveInteraction(item.id)}"
+										<p:commandLink styleClass="btn btn-info" 
+											 ><i class="fa fa-save fa-fw"></i>
+											<p:ajax listener="#{searchBean.saveInteraction(item)}"
 											oncomplete="$('#dlg').modal('show'); "
-												update=":modalForm:dlgContent" />
-										</p:commandButton>
+												update=":modalForm:dlgContent :searchForm:resultsTable" />
+										</p:commandLink>
 
+									</p:column>
+									
+									<p:column headerText="">
+										<h:panelGroup id="ratingPanel#{rowId}" rendered="#{item.showRating}">
+											<div class="rating">
+											    <!-- <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
+											    <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
+											    <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
+											    <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
+											    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label> -->
+											    <h:selectOneRadio value="#{item.rating}">
+												    <p:ajax event="click" listener="#{searchBean.saveFeedback(item)}" update="@this" />
+												   	<f:selectItem id="star5" itemValue="5" itemLabel="5 stars" />
+												   	<f:selectItem id="star4" itemValue="4" itemLabel="4 stars" />
+												   	<f:selectItem id="star3" itemValue="3" itemLabel="3 stars" />
+												   	<f:selectItem id="star2" itemValue="2" itemLabel="2 stars" />
+												   	<f:selectItem id="star1" itemValue="1" itemLabel="1 star" />
+												</h:selectOneRadio>
+											</div>
+										</h:panelGroup>
 									</p:column>
 								</p:dataTable>
 

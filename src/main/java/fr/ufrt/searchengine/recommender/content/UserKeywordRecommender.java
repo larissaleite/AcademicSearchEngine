@@ -1,4 +1,4 @@
-package fr.ufrt.searchengine.recommender;
+package fr.ufrt.searchengine.recommender.content;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +20,8 @@ import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
+
+import fr.ufrt.searchengine.recommender.Recommender;
 
 public class UserKeywordRecommender implements Recommender {
 

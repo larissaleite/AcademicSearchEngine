@@ -14,7 +14,7 @@ import fr.ufrt.searchengine.models.Paper;
 
 public class SolrSearcher extends Searcher {
 
-	private final String urlString = "http://localhost:8983/solr/gettingstarted_shard1_replica2";
+	private final String urlString = "http://localhost:8983/solr/gettingstarted_shard2_replica2";
    	private final SolrClient solr = new HttpSolrClient(urlString);
     
     public List<Item> search(String s){
@@ -39,29 +39,7 @@ public class SolrSearcher extends Searcher {
 
 	@Override
 	public List<Paper> search(String query, List<Paper> papers) {
-		SolrQuery solrQuery = new SolrQuery();
-		
-		List<Item> items = null;
-    	
-		solrQuery.setQuery(query);
-		solrQuery.set("fl", "* score");
-       
-        try {
-    		QueryResponse response = solr.query(solrQuery);
-    		items = response.getBeans(Item.class);
-    	} catch (SolrServerException e) {
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-        
-        for (Item item : items) {
-        	Paper paper = new Paper();
-        	paper.setAuthors(item.getAuthors().toString());
-        	paper.setTitle(item.getTitle().toString());;
-        	
-        	papers.add(paper);
-        }
-        return papers;
+		return null;
 	}
+
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,9 +29,6 @@ public class User implements Serializable {
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@Column(name="university", nullable=false)
-	private String university;
-
 	@Column(name="email", nullable=false)
 	private String email;
 	
@@ -42,16 +38,19 @@ public class User implements Serializable {
 	@Column(name="password", nullable=false)
 	private String password;
 	
-	@Column(name="interests")
-	@ElementCollection(targetClass=String.class)
-	private List<String> interests;
-	
 	@ManyToMany(cascade = {CascadeType.REMOVE})
 	@LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name="User_Author", 
                 joinColumns={ @JoinColumn(name="id_user") }, 
                 inverseJoinColumns={ @JoinColumn(name="id_author")} )
 	private List<Author> preferredAuthors;
+	
+	@ManyToMany(cascade = {CascadeType.REMOVE})
+	@LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name="User_Conferences", 
+                joinColumns={ @JoinColumn(name="id_user") }, 
+                inverseJoinColumns={ @JoinColumn(name="id_conference")} )
+	private List<Conference> preferredConferences;
 	
 	public int getId() {
 		return id;
@@ -67,14 +66,6 @@ public class User implements Serializable {
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(String university) {
-		this.university = university;
 	}
 
 	public String getEmail() {
@@ -101,20 +92,20 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public List<String> getInterests() {
-		return interests;
-	}
-
-	public void setInterests(List<String> interests) {
-		this.interests = interests;
-	}
-
 	public List<Author> getPreferredAuthors() {
 		return preferredAuthors;
 	}
 
 	public void setPreferredAuthors(List<Author> preferredAuthors) {
 		this.preferredAuthors = preferredAuthors;
+	}
+
+	public List<Conference> getPreferredConferences() {
+		return preferredConferences;
+	}
+
+	public void setPreferredConferences(List<Conference> preferredConferences) {
+		this.preferredConferences = preferredConferences;
 	}
 
 }
