@@ -20,7 +20,7 @@ public class Item {
 	@Field("docconference")
 	private List<String> conference;
 	@Field("docyear")
-	private List<String> year;
+	private List<Long> year;
 	
 	private boolean authorPreferred;
 	private boolean conferencePreferred;
@@ -31,7 +31,7 @@ public class Item {
 	public Item() {
 	} // Empty constructor is required
 	
-	public Item(List<Long> id, Float score, List<String> title, List<String> authors, List<String> conference, List<String> year) {
+	public Item(List<Long> id, Float score, List<String> title, List<String> authors, List<String> conference, List<Long> year) {
 		super();
 		this.setId(id);
 		this.score = score;
@@ -130,8 +130,12 @@ public class Item {
 		this.conference = conference;
 	}
 
-	public void setYear(List<String> year) {
+	public void setYear(List<Long> year) {
 		this.year = year;
+	}
+	
+	public List<Long> getYear() {
+		return year;
 	}
 
 }

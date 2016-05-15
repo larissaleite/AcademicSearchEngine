@@ -17,28 +17,52 @@
 				<div class="row">
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
-
+						<div class="form-group">
 						<h4>Search</h4>
-
+						
+						<div class="input-group">
 						<h:inputText value="#{searchBean.query}" styleClass="form-control"
 							id="query" type="text" name="query" maxlength="100"
 							placeholder="Search query" />
 
-						<hr />
-
+						<!-- <hr />-->
+						<span class="input-group-btn">
 						<h:commandButton value="Search"
-							styleClass="form-control btn btn-default">
+							styleClass="btn btn-default">
+							
 							<f:ajax execute="@form" listener="#{searchBean.search}"
 								render="@form" />
 						</h:commandButton>
+						</span>
 					</div>
-
+					</div>
+					</div>
 					<div class="col-md-4"></div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-11">
+						<h:panelGroup id="clusterRecommendations" styleClass="results">
+							<h:panelGroup
+								rendered="#{not empty searchBean.clusterRecommendations and not empty searchBean.items}">
+								<div class="keywords">
+									<p style="font-weight: bold; display:inline;">You might also be interested
+									in:</p>
+									<ui:repeat value="#{searchBean.clusterRecommendations}"
+										var="keyword">
+										<p class="keyword">#{keyword}</p>
+									</ui:repeat>
+								</div>
+
+							</h:panelGroup>
+						</h:panelGroup>
+					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-1"></div>
-					<div class="col-md-8">
+					<div class="col-md-11">
 						<h:panelGroup id="searchResults" styleClass="results">
 							<h:panelGroup rendered="#{not empty searchBean.items}">
 
@@ -49,24 +73,24 @@
 									</p:column> -->
 
 									<p:column headerText="Title">
-										<h:outputText value="#{item.title}" />
+										<h:outputText value="#{item.title[0]}" />
 									</p:column>
 
 									<p:column headerText="Author">
 										<ui:repeat var="author" value="#{item.authors}">
 											<h:outputText value="#{author}"
-												styleClass="#{item.authorPreferred ? 'highlight-author' : 'author'}" />
+												styleClass="#{item.authorPreferred ? 'highlight-preference' : 'preference'}" />
 										</ui:repeat>
 									</p:column>
 									
 									<p:column headerText="Conference">
-										<h:outputText value="#{item.conference}"
-												styleClass="#{item.conferencePreferred ? 'highlight-author' : 'author'}" />
+										<h:outputText value="#{item.conference[0]}"
+												styleClass="#{item.conferencePreferred ? 'highlight-preference' : 'preference'}" />
 									</p:column>
 									
-									<!-- <p:column headerText="Year">
-										<h:outputText value="#{item.year}" />
-									</p:column> -->
+									<p:column headerText="Year">
+										<h:outputText value="#{item.year[0]}" />
+									</p:column> 
 
 									<!-- <p:column headerText="Score">
 										<h:outputText value="#{item.score}" />
@@ -108,7 +132,7 @@
 
 					</div>
 
-					<div class="col-md-3 keywordRecommendation">
+					<!-- <div class="col-md-3 keywordRecommendation">
 						<h:panelGroup id="clusterRecommendations" styleClass="results">
 							<h:panelGroup
 								rendered="#{not empty searchBean.clusterRecommendations and not empty searchBean.items}">
@@ -123,7 +147,7 @@
 
 							</h:panelGroup>
 						</h:panelGroup>
-					</div>
+					</div>-->
 				</div>
 			</div>
 

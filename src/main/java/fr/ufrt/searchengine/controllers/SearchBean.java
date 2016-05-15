@@ -14,13 +14,13 @@ import java.util.Map;
 
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import fr.ufrt.searchengine.daos.interfaces.IInteractionDAO;
 import fr.ufrt.searchengine.models.Author;
 import fr.ufrt.searchengine.models.Conference;
-import fr.ufrt.searchengine.models.Interaction;
 import fr.ufrt.searchengine.models.Item;
 import fr.ufrt.searchengine.models.User;
 import fr.ufrt.searchengine.recommender.Recommender;
@@ -84,7 +84,9 @@ public class SearchBean {
 				}
 				
 				String keyword = lineArray[1];
-				documentKeywords.get(docId).add(keyword);
+				if (!documentKeywords.get(docId).contains(keyword)) {
+					documentKeywords.get(docId).add(keyword);
+				}
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -175,11 +177,14 @@ public class SearchBean {
 		this.keywordRecommendations = new ArrayList<String>();
 		
 		for (Item item : items) {
-			if (item.getId() != null && documentKeywords.get(item.getId().get(0)) != null) {
-				List<String> docKeywords = documentKeywords.get(item.getId().get(0));
+			String itemID = String.valueOf(item.getId().get(0));
+			if (documentKeywords.get(itemID) != null) {
+				List<String> docKeywords = documentKeywords.get(itemID);
 				for (String keyword : docKeywords) {
-					if (keywords.size() < 5) {
-						keywords.put(keyword, true);
+					if (!(keyword.toLowerCase()).equals(query.toLowerCase())) {
+						if (keywords.size() < 5) {
+							keywords.put(keyword, true);
+						}
 					}
 					break;
 				}
@@ -189,11 +194,10 @@ public class SearchBean {
 			}
 		}
 		
-		Iterator it = keywords.keySet().iterator();
+		Iterator it = keywords.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			System.out.println(pair.getKey().toString());
-			this.keywordRecommendations.add(pair.getKey().toString());
+			this.keywordRecommendations.add(WordUtils.capitalize(pair.getKey().toString()));
 		}
 	}
 
@@ -211,7 +215,8 @@ public class SearchBean {
 	private void checkIfAuthorIsPreferred(List<Author> authors, Item item) {
 		if (item.getAuthors() != null) {
 			for (Author author : authors) {
-				if (item.getAuthors().get(0).contains(author.getName())) {
+				String authorsNames = item.getAuthors().get(0);
+				if (authorsNames.contains(author.getName())) {
 					item.setAuthorPreferred(true);
 					
 					float score = item.getScore();
@@ -219,14 +224,22 @@ public class SearchBean {
 					
 					item.setScore(score*(1+weight));
 				}
+				String cleanedAuthorsNames = cleanAuthorsNames(authorsNames);
+				item.getAuthors().set(0, cleanedAuthorsNames);
 			}
 		}
+	}
+
+	private String cleanAuthorsNames(String authorsNames) {
+		authorsNames = authorsNames.replace(";", "; ");
+		authorsNames = authorsNames.replace(",", "");
+		return authorsNames;
 	}
 	
 	private void checkIfConferenceIsPreferred(List<Conference> conferences, Item item) {
 		if (item.getConference() != null) {
 			for (Conference conference : conferences) {
-				if (item.getConference().equals(conference)) {
+				if (item.getConference().get(0).equals(conference.getName())) {
 					item.setConferencePreferred(true);
 					
 					float score = item.getScore();
