@@ -20,8 +20,16 @@ public class SolrSearcher extends Searcher {
     public List<Item> search(String s){
     	SolrQuery query = new SolrQuery();
     	List<Item> beans = null;
-    	query.setQuery(s);
     	
+    	
+    	String y=extractNumber(s);
+        int year=Integer.parseInt(y);
+    	if(year > 1000 && year < 2020)
+    		query.setQuery( s + " docyear:"+year);
+    	else
+        query.setQuery(s);
+    	
+    	query.setRows(20);
     	//get scores for all documents
         query.set("fl", "* score");
        
@@ -41,5 +49,24 @@ public class SolrSearcher extends Searcher {
 	public List<Paper> search(String query, List<Paper> papers) {
 		return null;
 	}
+	
+	 private String extractNumber(final String str) {                
+
+		    if(str == null || str.isEmpty()) return "";
+
+		    StringBuilder sb = new StringBuilder();
+		    boolean found = false;
+		    for(char c : str.toCharArray()){
+		        if(Character.isDigit(c)){
+		            sb.append(c);
+		            found = true;
+		        } else if(found){
+		            // If we already found a digit before and this char is not a digit, stop looping
+		            break;                
+		        }
+		    }
+
+		    return sb.toString();
+		}
 
 }
