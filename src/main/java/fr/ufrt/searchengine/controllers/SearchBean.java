@@ -50,7 +50,7 @@ public class SearchBean {
 	
 	private List<String> similarItems;
 	
-	private HashMap<String, Integer> docIds;
+	private HashMap<Integer, String> docIds;
 	private HashMap<Integer, Float> conferencesPreferences;
 	private HashMap<String, Float> authorsPreferences;
 	private HashMap<String, List<String>> documentKeywords;
@@ -160,7 +160,7 @@ public class SearchBean {
 		List<Conference> conferences = getUser().getPreferredConferences();
 
 		for (Item item : results) {
-			//checkIfItemIsRecommended(item);
+			checkIfItemIsRecommended(item);
 			checkIfAuthorIsPreferred(authors, item);
 			checkIfConferenceIsPreferred(conferences, item);
 		}
@@ -253,12 +253,10 @@ public class SearchBean {
 	}
 
 	private void checkIfItemIsRecommended(Item item) {
-//		String[] idSplit = item.getId().get(0);.split("/");
-//		String id = idSplit[idSplit.length - 1];
-//
-//		if (documentsRecommendations.contains(id)) {
-//			item.setRecommended(true);
-//		}
+		String docName = docIds.get((int) (long) item.getId().get(0));
+		if (documentsRecommendations.contains(docName)) {
+			item.setRecommended(true);
+		}
 	}
 
 	public void saveInteraction(Item item) {
@@ -285,20 +283,20 @@ public class SearchBean {
 	}
 	
 	private void mapDocsIds() {
-		String csvFile = "/Users/larissaleite/Downloads/ir-docs/docIds.csv";
+		String csvFile = "/Users/larissaleite/Downloads/users_stage3/docIds.csv";
 		
 		BufferedReader br = null;
 		
 		String line = null;
 
-		HashMap<String, Integer> docIds = new HashMap<String, Integer>();
+		HashMap<Integer, String> docIds = new HashMap<Integer, String>();
 		
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
 
 			while ((line = br.readLine()) != null) {
 				String[] row = line.split(",");
-				docIds.put(row[1], Integer.parseInt(row[0]));
+				docIds.put(Integer.parseInt(row[0]), row[1]);
 			}
 			
 			setDocIds(docIds);
@@ -359,11 +357,11 @@ public class SearchBean {
 		this.user = user;
 	}
 
-	public HashMap<String, Integer> getDocIds() {
+	public HashMap<Integer, String> getDocIds() {
 		return docIds;
 	}
 
-	public void setDocIds(HashMap<String, Integer> docIds) {
+	public void setDocIds(HashMap<Integer, String> docIds) {
 		this.docIds = docIds;
 	}
 

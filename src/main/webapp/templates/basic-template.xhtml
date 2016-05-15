@@ -75,9 +75,31 @@
 	.search-input {
 	}
 	
-	.keywords {/*Recommendation {
+	.recommendations {
+		margin-top:5%;
+		font-size:12px;
+		text-align:center;
+	}
+	
+	.recommendedKeywords {
+		float: right;
 		text-align:right;
-		padding-right:6%;*/
+		padding-right:6%;
+	}
+	
+	.recommendedRow {
+		margin-bottom:3%;
+	}
+	
+	.fa-file-text-o {
+		margin-bottom:2%;
+	}
+	
+	.resultsTable > tbody > tr > td  {
+		vertical-align: middle !important;
+	}
+	
+	.keywords {
 		font-size:14px;
 		margin-top:2%;
 		border: 1px dashed #eee;
@@ -90,8 +112,13 @@
 		font-style:italic !important;
 	}
 	
+	.resultsTable > thead > tr > th:nth-child(1) {
+		width:4% !important;
+		vertical-align:middle;
+	}
+
 	.resultsTable > thead > tr > th:nth-child(4) {
-		width:6% !important;
+		width:10% !important;
 	}
 	
 	.resultsTable > thead > tr > th:nth-child(5) {
@@ -99,7 +126,7 @@
 	}
 	
 	.resultsTable > thead > tr > th:nth-child(6) {
-		width:15% !important;
+		width:10% !important;
 	}
 
 /* below, css for the star ratings  */
@@ -155,6 +182,57 @@
 }
 
 .rating > table > tbody > tr > td > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+
+
+/* another try */
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1.2em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:150%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > label:active {
     position:relative;
     top:2px;
     left:2px;

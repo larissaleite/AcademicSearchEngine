@@ -68,9 +68,12 @@
 
 								<p:dataTable rowIndexVar="rowId" id="resultsTable" tableStyleClass="resultsTable table table-striped"
 									var="item" value="#{searchBean.items}">
-									<!-- <p:column headerText="Id">
-										<h:outputText value="#{item.id}" />
-									</p:column> -->
+									
+									<p:column headerText="" styleClass="recommendationIcon">
+										<h:panelGroup rendered="#{item.recommended}">
+											<i class="fa fa-book fa-fw"></i>
+										</h:panelGroup>
+									</p:column>
 
 									<p:column headerText="Title">
 										<h:outputText value="#{item.title[0]}" />
@@ -88,13 +91,12 @@
 												styleClass="#{item.conferencePreferred ? 'highlight-preference' : 'preference'}" />
 									</p:column>
 									
-									<p:column headerText="Year">
+									<p:column sortBy="#{item.year[0]}">
+										<f:facet name="header">
+									        Year <i class="fa fa-fw fa-sort"></i>
+									    </f:facet>
 										<h:outputText value="#{item.year[0]}" />
 									</p:column> 
-
-									<!-- <p:column headerText="Score">
-										<h:outputText value="#{item.score}" />
-									</p:column> -->
 
 									<p:column headerText="">
 										<p:commandLink styleClass="btn btn-info" 
@@ -109,19 +111,19 @@
 									<p:column headerText="">
 										<h:panelGroup id="ratingPanel#{rowId}" rendered="#{item.showRating}">
 											<div class="rating">
-											    <!-- <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
+											    <input type="radio" id="star5" name="rating" value="5" /><label for="star5">5 stars</label>
 											    <input type="radio" id="star4" name="rating" value="4" /><label for="star4">4 stars</label>
 											    <input type="radio" id="star3" name="rating" value="3" /><label for="star3">3 stars</label>
 											    <input type="radio" id="star2" name="rating" value="2" /><label for="star2">2 stars</label>
-											    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label> -->
-											    <h:selectOneRadio value="#{item.rating}">
+											    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">1 star</label> 
+											    <!-- <h:selectOneRadio value="#{item.rating}">
 												    <p:ajax event="click" listener="#{searchBean.saveFeedback(item)}" update="@this" />
 												   	<f:selectItem id="star5" itemValue="5" itemLabel="5 stars" />
 												   	<f:selectItem id="star4" itemValue="4" itemLabel="4 stars" />
 												   	<f:selectItem id="star3" itemValue="3" itemLabel="3 stars" />
 												   	<f:selectItem id="star2" itemValue="2" itemLabel="2 stars" />
 												   	<f:selectItem id="star1" itemValue="1" itemLabel="1 star" />
-												</h:selectOneRadio>
+												</h:selectOneRadio>-->
 											</div>
 										</h:panelGroup>
 									</p:column>
@@ -132,22 +134,6 @@
 
 					</div>
 
-					<!-- <div class="col-md-3 keywordRecommendation">
-						<h:panelGroup id="clusterRecommendations" styleClass="results">
-							<h:panelGroup
-								rendered="#{not empty searchBean.clusterRecommendations and not empty searchBean.items}">
-								<p style="font-weight: bold;">You might also be interested
-									in:</p>
-								<div class="keywords">
-									<ui:repeat value="#{searchBean.clusterRecommendations}"
-										var="keyword">
-										<p class="keyword">#{keyword}</p>
-									</ui:repeat>
-								</div>
-
-							</h:panelGroup>
-						</h:panelGroup>
-					</div>-->
 				</div>
 			</div>
 

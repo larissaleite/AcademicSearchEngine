@@ -25,6 +25,9 @@ public class LoginBean {
 	
 	@Autowired
 	private SearchBean searchBean;
+	
+	@Autowired
+	private HomeBean homeBean;
 
 	public LoginBean() {
 		user = new User();
@@ -36,7 +39,7 @@ public class LoginBean {
 		if (registeredUser != null) {
 			instantiateUserInformation(registeredUser);
 
-			return "search.jsf";
+			return "home.jsf";
 		}
 		return "index.jsf";
 	}
@@ -61,6 +64,9 @@ public class LoginBean {
 		
 		searchBean.mapAuthorsWeight();
 		searchBean.mapConferencesWeight();
+		
+		homeBean.setTopDocuments();
+		homeBean.setTopKeywords();
 		
 	}
 
