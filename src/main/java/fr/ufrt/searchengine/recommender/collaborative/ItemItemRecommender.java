@@ -1,7 +1,6 @@
-package fr.ufrt.searchengine.recommender.content;
+package fr.ufrt.searchengine.recommender.collaborative;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,13 +11,13 @@ import java.util.Map;
 
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.GenericBooleanPrefDataModel;
-import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 
+import fr.ufrt.searchengine.adapter.VoldemortMahoutAdapter;
 import fr.ufrt.searchengine.recommender.Recommender;
 
 public class ItemItemRecommender implements Recommender {
@@ -44,8 +43,7 @@ public class ItemItemRecommender implements Recommender {
 
 		try {
 			DataModel model = new GenericBooleanPrefDataModel(
-					GenericBooleanPrefDataModel.toDataMap(new FileDataModel(
-							new File(dirPath + "user_doc.csv"))));
+					GenericBooleanPrefDataModel.toDataMap(VoldemortMahoutAdapter.getUsersDocsDataModel()));
 
 			ItemSimilarity itemSimilarity = new LogLikelihoodSimilarity(model);
 			
@@ -53,8 +51,6 @@ public class ItemItemRecommender implements Recommender {
 			recommendations = recommender.mostSimilarItems(itemID, 5);
 			
 		} catch (TasteException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return recommendations;

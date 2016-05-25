@@ -1,7 +1,7 @@
 package fr.ufrt.searchengine.config;
 
+import java.awt.print.Paper;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,18 +14,16 @@ import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.ufrt.searchengine.daos.interfaces.IAuthorDAO;
 import fr.ufrt.searchengine.daos.interfaces.IConferenceDAO;
-import fr.ufrt.searchengine.daos.interfaces.IPaperDAO;
 import fr.ufrt.searchengine.daos.interfaces.IUserDAO;
 import fr.ufrt.searchengine.models.Author;
 import fr.ufrt.searchengine.models.Conference;
-import fr.ufrt.searchengine.models.Paper;
 import fr.ufrt.searchengine.models.User;
+import fr.ufrt.searchengine.voldemort.VoldemortDB;
 
 public class Config implements ServletContextListener {
 
@@ -38,9 +36,6 @@ public class Config implements ServletContextListener {
 	@Autowired
 	private IConferenceDAO conferenceDAO;
 	
-	@Autowired
-	private IPaperDAO paperDAO;
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void saveUsersAuthors() {
 		String csvFile = "/Users/larissaleite/Downloads/users_stage3/user_author_with_name.csv";
@@ -154,11 +149,95 @@ public class Config implements ServletContextListener {
 		//saveUsersAuthors();
 		//saveUsersConferences();
 		
-		//not using
+		//not using for MySQL
 		//saveDocuments();
-		// saveUsersInteractions();
+		//saveUsersInteractions();
+		
+		//Voldemort
+		//saveUsersDocumentsVoldemort();
+		//saveUsersAuthorsVoldemort();
+		//saveUsersConferencesVoldemort();
 	}
 	
+	private void saveUsersDocumentsVoldemort() {
+		try {
+			VoldemortDB voldemortDB = new VoldemortDB();
+
+			BufferedReader br = new BufferedReader(new FileReader(
+					"/Users/larissaleite/Downloads/users_stage3/user_doc.csv"));
+			
+			String line = null;
+			
+			while ((line = br.readLine()) != null) {
+				String[] lineArray = line.split(",");
+				voldemortDB.addUserDoc(lineArray[0]+"_"+lineArray[1]);
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveUsersAuthorsVoldemort() {
+			VoldemortDB voldemortDB = new VoldemortDB();
+
+			String csvFile = "/Users/larissaleite/Downloads/users_stage3/user_author_weight.csv";
+			
+			BufferedReader br = null;
+			
+			String line = null;
+
+			
+			try {
+				br = new BufferedReader(new FileReader(csvFile));
+
+				//ignore header
+				line = br.readLine();
+				
+				while ((line = br.readLine()) != null) {
+					String[] lineArray = line.split(",");
+					voldemortDB.addUserAuthor(lineArray[0]+"_"+lineArray[1], lineArray[2]);
+				}
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveUsersConferencesVoldemort() {
+			VoldemortDB voldemortDB = new VoldemortDB();
+
+			String csvFile = "/Users/larissaleite/Downloads/users_stage3/user_conference_weight.csv";
+			
+			BufferedReader br = null;
+			
+			String line = null;
+
+			
+			try {
+				br = new BufferedReader(new FileReader(csvFile));
+
+				//ignore header
+				line = br.readLine();
+				
+				while ((line = br.readLine()) != null) {
+					String[] lineArray = line.split(",");
+					voldemortDB.addUserConference(lineArray[0]+"_"+lineArray[1], lineArray[2]);
+				}
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void readCSV() {
 //		BufferedReader br = new BufferedReader(new FileReader(
 //				"/Users/larissaleite/Downloads/IR_project/docfinal.csv"));
@@ -189,7 +268,7 @@ public class Config implements ServletContextListener {
 		
 	}
 	
-	private void saveDocuments() {
+	/*private void saveDocuments() {
 		//HashMap<String, List<Author>> papersAuthors = readPapersAuthors();
 		HashMap<String, Conference> paperConference = readPapersConference();
 		HashMap<String, List<String>> papersKeywords = readPaperKeywords();
@@ -223,7 +302,6 @@ public class Config implements ServletContextListener {
 		}
 	}
 	
-	/*
 	private HashMap<String, List<Author>> readPapersAuthors() {
 		BufferedReader br = new BufferedReader(new FileReader(
 				"/Users/larissaleite/Downloads/IR_project/docfinal.csv"));

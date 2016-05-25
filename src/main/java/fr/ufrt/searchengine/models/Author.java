@@ -29,9 +29,6 @@ public class Author implements Serializable {
 	@ManyToMany(mappedBy="preferredAuthors")
 	private List<User> users;
 	
-	@ManyToMany(mappedBy="authors")
-	private List<Paper> papers;
-	
 	public int getId() {
 		return id;
 	}

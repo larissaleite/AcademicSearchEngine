@@ -52,20 +52,29 @@ public class LoginBean {
 		}
 
 		searchBean.setUser(user);
+		homeBean.setUser(user);
 		
 		List<String> documentsRecommendations = new ArrayList<String>();
 
-		Recommender documentRecommender = DocumentRecommenderChainInitializer
-				.getChainOfRecommenders();
-		documentsRecommendations = documentRecommender.getRecommendations(
-				documentsRecommendations, user.getId());
+		if (!homeBean.isNewUser(user)) {
+		
+			Recommender documentRecommender = DocumentRecommenderChainInitializer
+					.getChainOfRecommenders();
+			documentsRecommendations = documentRecommender.getRecommendations(
+					documentsRecommendations, user.getId());
+		}
 		
 		searchBean.setDocumentsRecommendations(documentsRecommendations);
 		
 		searchBean.mapAuthorsWeight();
 		searchBean.mapConferencesWeight();
 		
+		homeBean.mapDocsNameTitle();
+		
+		homeBean.setDocumentsRecommendations(documentsRecommendations);
+		
 		homeBean.setTopDocuments();
+		homeBean.mapRecommendedDocsIds();
 		homeBean.setTopKeywords();
 		
 	}

@@ -10,9 +10,8 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 
 import fr.ufrt.searchengine.models.Item;
-import fr.ufrt.searchengine.models.Paper;
 
-public class SolrSearcher extends Searcher {
+public class SolrSearcher {
 
 	private final String urlString = "http://localhost:8983/solr/gettingstarted_shard2_replica2";
 	private final SolrClient solr = new HttpSolrClient(urlString);
@@ -47,11 +46,6 @@ public class SolrSearcher extends Searcher {
 			e.printStackTrace();
 		}
 		return beans;
-	}
-
-	@Override
-	public List<Paper> search(String query, List<Paper> papers) {
-		return null;
 	}
 
 	private String extractNumber(final String str) {
